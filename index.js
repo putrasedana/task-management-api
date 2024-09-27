@@ -10,24 +10,13 @@ const PORT = process.env.PORT || 8000;
 
 dotenv.config();
 
-// CORS configuration to allow your frontend
-const corsOptions = {
-  origin: "https://task-management-app-virid.vercel.app", // Frontend URL
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
-
-// Apply CORS middleware with options
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(express.json());
 
 app.use("/api", authRoutes);
 app.use("/api", taskRoutes);
 app.use("/api", userRoutes);
-
-// Handle preflight requests for all routes
-app.options("*", cors(corsOptions));
 
 app.get("/", (req, res) => {
   res.send("API is running");
