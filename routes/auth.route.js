@@ -6,8 +6,6 @@ import { v4 as uuidv4 } from "uuid";
 
 const router = express.Router();
 
-const JWT_SECRET = process.env.JWT_SECRET;
-
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -21,7 +19,7 @@ router.post("/register", async (req, res) => {
     }
 
     const newUser = new User({
-      id: uuidv4(), // Generate a unique ID
+      id: uuidv4(),
       name,
       email,
       password,
@@ -60,8 +58,8 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    const accessToken = jwt.sign({ userId: user._id }, JWT_SECRET, {
-      expiresIn: "6h",
+    const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
     });
 
     res.status(200).json({
@@ -72,6 +70,7 @@ router.post("/login", async (req, res) => {
       },
     });
   } catch (error) {
+    console.error("Login error:", error.message);
     res.status(500).json({ status: "error", message: "Login failed" });
   }
 });
