@@ -7,6 +7,7 @@ import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import path from "path";
 import { fileURLToPath } from "url";
+import http from "http";
 
 dotenv.config();
 
